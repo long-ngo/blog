@@ -7,29 +7,32 @@ const port = 3000;
 
 const route = require('./routes/mainRoute');
 
-
 //static file
 app.use(express.static(path.join(__dirname, 'public')));
 
 //middleware
-app.use(express.urlencoded({
-    extended: true
-}));
+app.use(
+    express.urlencoded({
+        extended: true,
+    })
+);
 app.use(express.json());
 
 //http logger
 app.use(morgan('combined'));
 
 //template engine
-app.engine('hbs', exphbs({
-    extname: '.hbs'
-}));
+app.engine(
+    'hbs',
+    exphbs({
+        extname: '.hbs',
+    })
+);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources/views'));
 
 //routes init
 route(app);
-
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
