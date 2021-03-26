@@ -20,12 +20,12 @@
     "express-handlebars": "^5.2.1"
   },
   "lint-staged": {
-    "*.ts": [
+    "src/**/*.{js, json, scss}": [
       "npm run lint",
       "npm run format",
-      "git add ."
-    ],
-    "src/**/*.{js, json, scss}": "prettier --single-quote --tab-width 4 --write"
+      "git add .",
+      "prettier --single-quote --tab-width 4 --write"
+    ]
   },
   "husky": {
     "hooks": {
