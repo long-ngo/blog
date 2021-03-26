@@ -16,7 +16,7 @@
   "author": "longngo",
   "license": "ISC",
   "lint-staged": {
-    "src/**/*.{js, json, scss}": "npm run pretty"
+    "src/**/*.{js, json, scss}": "prettier --single-quote --tab-width 4 --write"
   },
   "husky": {
     "hooks": {
