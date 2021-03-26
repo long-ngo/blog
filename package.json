@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon --inspect src/index.js",
     "watch": "node-sass --watch src/resources/scss --output src/public/css",
+    "pretty": "lint-staged",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -20,16 +21,11 @@
     "express-handlebars": "^5.2.1"
   },
   "lint-staged": {
-    "src/**/*.{js, json, scss}": [
-      "npm run lint",
-      "npm run format",
-      "git add .",
-      "prettier --single-quote --tab-width 4 --write"
-    ]
+    "src/**/*.{js, json, scss}": "prettier --single-quote --tab-width 4 --write"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run pretty"
     }
   },
   "devDependencies": {
