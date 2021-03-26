@@ -17,10 +17,6 @@
   ],
   "author": "longngo",
   "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1",
-    "express-handlebars": "^5.2.1"
-  },
   "lint-staged": {
     "src/**/*.{js, json, scss}": "prettier --single-quote --tab-width 4 --write"
   },
@@ -28,6 +24,10 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.1"
   },
   "devDependencies": {
     "husky": "^5.2.0",
