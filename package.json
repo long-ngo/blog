@@ -22,7 +22,8 @@
   },
   "lint-staged": {
     "src/**/*.{js, json}": [
-      "prettier --single-quote --tab-width 4 --write"
+      "prettier --single-quote --tab-width 4 --write",
+      "git add"
     ]
   },
   "husky": {
