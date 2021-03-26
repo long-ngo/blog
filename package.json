@@ -21,7 +21,7 @@
     "express-handlebars": "^5.2.1"
   },
   "lint-staged": {
-    "src/**/*.{js, json, scss}": [
+    "src/**/*.{js, json}": [
       "prettier --single-quote --tab-width 4 --write"
     ]
   },
