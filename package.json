@@ -21,11 +21,13 @@
     "express-handlebars": "^5.2.1"
   },
   "lint-staged": {
-    "src/**/*.{js, json, scss}": "prettier --single-quote --tab-width 4 --write"
+    "src/**/*.{js, json, scss}": [
+      "prettier --single-quote --tab-width 4 --write"
+    ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run pretty"
+      "pre-commit": "lint-staged"
     }
   },
   "devDependencies": {
