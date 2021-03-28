@@ -1,11 +1,15 @@
 <div class="row">
     {{#each courses}}
-    <div class="col-6">
+    <div class="col">
         <div class="card" style="width: 18rem;">
-            <img src="{{ image }}" class="card-img-top" alt="{{name}}">
+            <a href="/courses/{{slug}}">
+                <img src="{{image}}" class="card-img-top" alt="{{name}}">
+            </a>
             <div class="card-body">
-                <h5 class="card-title">{{ name }}</h5>
-                <p class="card-text">{{ destription }}</p>
+                <a href="/courses/{{slug}}">
+                    <h5 class="card-title">{{name}}</h5>
+                </a>
+                <p class="card-text">{{destription}}</p>
                 <a href="#" class="btn btn-primary">Miễn phí</a>
             </div>
         </div>

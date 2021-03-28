@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-const route = require('./routes/mainRoute');
+const route = require('./routes/main');
 const db = require('./config/db');
 
 //connect to DB
@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //middleware
 app.use(
     express.urlencoded({
-        extended: true,
+        extended: true
     })
 );
 app.use(express.json());
@@ -29,7 +29,7 @@ app.use(morgan('combined'));
 app.engine(
     'hbs',
     exphbs({
-        extname: '.hbs',
+        extname: '.hbs'
     })
 );
 app.set('view engine', 'hbs');
