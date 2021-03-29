@@ -19,7 +19,11 @@ class CourseController {
 
     //[POST] /courses/store
     store(req, res, next) {
-        res.json(req.body);
+        const course = new Course(req.body);
+        course.save()
+            .then(data => res.json(data))
+            .catch(err => console.log(err));
+
     }
 }
 

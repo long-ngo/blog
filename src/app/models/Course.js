@@ -6,8 +6,8 @@ const Course = new Schema({
     description: { type: String },
     videoId: { type: String },
     level: { type: String },
-    createAt: { type: Date },
-    updateAt: { type: Date }
+    // createAt: { type: Date },
+    // updateAt: { type: Date }
 });
 
 module.exports = mongoose.model('Course', Course);
