@@ -1,4 +1,11 @@
 <h2>Đăng khóa học</h2>
+
+{{#if err}}
+<div class="alert alert-danger" role="alert">
+    Không đăng ký được khóa học!!!
+</div>
+{{/if}}
+
 <form method="POST" action="/courses/store">
     <div class="form-group">
         <label for="nameCourse">Tên khóa học</label>

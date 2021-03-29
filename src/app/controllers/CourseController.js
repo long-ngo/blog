@@ -21,8 +21,8 @@ class CourseController {
     store(req, res, next) {
         const course = new Course(req.body);
         course.save()
-            .then(data => res.json(data))
-            .catch(err => console.log(err));
+            .then(data => res.redirect('/'))
+            .catch(err => res.render('courses/create', { err }));
 
     }
 }
