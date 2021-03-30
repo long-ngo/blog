@@ -29,7 +29,10 @@ app.use(morgan('combined'));
 app.engine(
     'hbs',
     exphbs({
-        extname: '.hbs'
+        extname: '.hbs',
+        helpers: {
+            sum: (a, b) => a + b
+        }
     })
 );
 app.set('view engine', 'hbs');
