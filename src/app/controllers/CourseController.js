@@ -10,7 +10,7 @@ class CourseController {
     //[GET] /courses/:id/edit
     edit(req, res, next) {
         Course.findOne({ _id: req.params.id })
-            .then((course) => {
+            .then(course => {
                 res.render('courses/edit', {
                     course: mongooseToObject(course)
                 });
@@ -21,7 +21,7 @@ class CourseController {
     //[GET] /courses/:slug
     show(req, res, next) {
         Course.findOne({ slug: req.params.slug })
-            .then((course) => {
+            .then(course => {
                 res.render('courses/show', {
                     course: mongooseToObject(course)
                 });
@@ -34,7 +34,7 @@ class CourseController {
         const course = new Course(req.body);
         course
             .save()
-            .then((data) => res.redirect('/'))
+            .then(_=> res.redirect('/'))
             .catch(next);
     }
 }

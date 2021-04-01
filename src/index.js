@@ -1,7 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
+const methodOverride = require('method-override');
 const exphbs = require('express-handlebars');
 const path = require('path');
+
 const app = express();
 const port = 3000;
 
@@ -37,6 +39,9 @@ app.engine(
 );
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
+
+// override with POST having ?_method=PUT
+app.use(methodOverride('_method'));
 
 //routes init
 route(app);

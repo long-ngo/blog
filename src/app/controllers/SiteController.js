@@ -5,7 +5,7 @@ class SiteController {
     //[GET] /
     home(req, res, next) {
         Course.find({})
-            .then((courses) => {
+            .then(courses => {
                 res.render('home', {
                     courses: multileMongooseToObject(courses)
                 });
