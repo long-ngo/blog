@@ -16,9 +16,47 @@
             <td>{{this.createdAt}}</td>
             <td>
                 <a href="/courses/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-                <a href="/courses/{{this._id}}/delete" class="btn btn-link">Xóa</a>
+                <a href="#" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteCourseModal" data-bs-whatever="{{this._id}}">Xóa</a>
             </td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+
+<!-- Modal -->
+<div class="modal" tabindex="-1" id="deleteCourseModal" aria-labelledby="deleteCourseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteCourseModalLabel">Bạn có chắc chắn muốn xóa?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Chọn xóa bỏ để hoàn tất</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="discard">Xóa bỏ</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- <form method="POST" action="/courses/{{course._id}}?_method=DELETE"></form> --}}
+<form method="POST" id="formCourse"></form>
+
+<script>
+    var deleteCourseModal = document.getElementById('deleteCourseModal')
+    deleteCourseModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var courseId = button.getAttribute('data-bs-whatever');
+        var formCourse = document.forms['formCourse'];
+
+        formCourse.action = `/courses/${courseId}?_method=DELETE`;
+
+        var discard = document.getElementById('discard');
+        discard.addEventListener('click', () => {
+            formCourse.submit();
+        });
+    })
+</script>
