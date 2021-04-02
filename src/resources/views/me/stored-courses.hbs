@@ -1,3 +1,5 @@
+<h2>Danh sách khóa học của tôi</h2>
+<a href="/me/stored/trash" class="btn btn-link">Thùng rác</a>
 <table class="table">
     <thead>
         <tr>
@@ -16,9 +18,18 @@
             <td>{{this.createdAt}}</td>
             <td>
                 <a href="/courses/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-                <a href="#" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteCourseModal" data-bs-whatever="{{this._id}}">Xóa</a>
+                <a href="#" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteCourseModal"
+                    data-bs-whatever="{{this._id}}">Xóa</a>
             </td>
         </tr>
+        {{else}}
+        <td colspan="4">
+            <div class="alert alert-danger" role="alert">
+                Danh sách khóa học trống!!!
+                <a href="/courses/create" class="btn btn-link">Tạo khóa học ngay</a>
+            </div>
+        </td>
+
         {{/each}}
     </tbody>
 </table>
@@ -43,7 +54,7 @@
 </div>
 
 {{!-- <form method="POST" action="/courses/{{course._id}}?_method=DELETE"></form> --}}
-<form method="POST" id="formCourse"></form>
+<form method="POST" name="formCourse"></form>
 
 <script>
     var deleteCourseModal = document.getElementById('deleteCourseModal')
