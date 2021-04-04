@@ -1,5 +1,12 @@
 <h2>Khóa học đã xóa</h2>
 
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+  <label class="form-check-label" for="flexCheckDefault">
+    Default checkbox
+  </label>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -35,7 +42,6 @@
 </table>
 
 {{!-- <form method="POST" action="/courses/{{course._id}}?_method=PATCH"></form> --}}
-<form method="POST" name="formCourse"></form>
 
 <!-- Modal -->
 <div class="modal" tabindex="-1" id="course-modal" aria-labelledby="course-modal-label" aria-hidden="true">
@@ -57,13 +63,21 @@
 </div>
 
 <script>
+    //Tạo form <form method="POST" name="formCourse"></form>
+    var formCourse = document.createElement('form');
+    formCourse.method = 'POST';
+    formCourse.name = 'form-course';
+    document.body.appendChild(formCourse);
+
+    //Bắt event khôi phục và xóa
     var restoreCourse = document.querySelectorAll('.restore-course');
     var courseModal = document.querySelector('#course-modal');
 
-    for (let i = 0, len = restoreCourse.length; i < len; i++) {
+    for (let i = 0, l = restoreCourse.length; i < l; i++) {
         restoreCourse[i].addEventListener('click', function (event) {
-            var courseId = restoreCourse[i].getAttribute('data-bs-whatever');
-            var formCourse = document.forms['formCourse'];
+            //event.target trả về this tag </>
+            var courseId = event.target.getAttribute('data-bs-whatever');
+            var formCourse = document.forms['form-course'];
 
             formCourse.action = `/courses/${courseId}?_method=PATCH`;
             formCourse.submit();
@@ -73,7 +87,7 @@
     courseModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget;
         var courseId = button.getAttribute('data-bs-whatever');
-        var formCourse = document.forms['formCourse'];
+        var formCourse = document.forms['form-course'];
 
         formCourse.action = `/courses/${courseId}/permanently-delete?_method=DELETE`;
 

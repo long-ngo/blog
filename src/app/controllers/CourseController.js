@@ -65,6 +65,13 @@ class CourseController {
             .then(() => res.redirect('back'))
             .catch(next);
     }
+
+    //[DELETE] /courses/delete-multiple
+    deleteMultiple(req, res, next) {
+        Course.deleteById(req.body.courses)
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
 }
 
 module.exports = new CourseController();
