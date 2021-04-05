@@ -16,9 +16,10 @@ class CourseController {
 
     //[GET] /me/stored/trash
     trash(req, res, next) {
-        Course.findDeleted({})
-            .then(course => res.render('me/trash', {
-                course: multileMongooseToObject(course)
+        Promise.all([Course.findDeleted({}), Course.count({})])
+            .then(([course, count]) => res.render('me/trash', {
+                course: multileMongooseToObject(course),
+                count
             }))
             .catch(next);
     }

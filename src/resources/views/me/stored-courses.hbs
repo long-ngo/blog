@@ -1,158 +1,159 @@
-<h2>Danh sách khóa học của tôi</h2>
+<h2 class="mt-2">Danh sách khóa học của tôi</h2>
+
 <a href="/me/stored/trash" class="btn btn-link">
     Thùng rác <span class="badge bg-secondary">{{count}}</span>
-    <span class="visually-hidden">unread messages</span>
+    <span class="visually-hidden">messages</span>
 </a>
 
-{{!-- /courses/<delete>-multiple?_method=<DELETE> --}}
-        <form name="fm-multiple" method="POST">
-            <div class="d-flex">
-                <div class="form-check align-self-center">
-                    <input class="form-check-input" type="checkbox" id="all-check">
-                    <label class="form-check-label" for="all-check">
-                        Chọn tất cả
-                    </label>
-                </div>
-
-                <select class="select ms-2 option-method" name="option-method" aria-label="option-method">
-                    <option selected value="">--Tùy chọn--</option>
-                    <option value="delete">Xóa</option>
-                </select>
-
-                <button type="submit" class="btn btn-primary ms-2 perform-delete" disabled>Thực hiện</button>
-            </div>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Tên</th>
-                        <th scope="col">Trình độ</th>
-                        <th scope="col" colspan="2">Thời gian tạo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each course}}
-                    <tr>
-                        <th scope="row">
-                            <div class="form-check">
-                                <input class="form-check-input course-check" type="checkbox" name="courses"
-                                    value="{{this._id}}" id="course-{{sum @index 1}}">
-                                <label class="form-check-label" for="course-{{sum @index 1}}">
-                                    {{sum @index 1}}
-                                </label>
-                            </div>
-                        </th>
-                        <td>{{this.name}}</td>
-                        <td>{{this.level}}</td>
-                        <td>{{this.createdAt}}</td>
-                        <td>
-                            <a href="/courses/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-                            <a href="#" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteCourseModal"
-                                data-bs-whatever="{{this._id}}">Xóa</a>
-                        </td>
-                    </tr>
-                    {{else}}
-                    <td colspan="4">
-                        <div class="alert alert-danger" role="alert">
-                            Danh sách khóa học trống!!!
-                            <a href="/courses/create" class="btn btn-link">Tạo khóa học ngay</a>
-                        </div>
-                    </td>
-
-                    {{/each}}
-                </tbody>
-            </table>
-        </form>
-
-        <!-- Modal -->
-        <div class="modal" tabindex="-1" id="deleteCourseModal" aria-labelledby="deleteCourseModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteCourseModalLabel">Bạn có chắc chắn muốn xóa?</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Chọn xóa bỏ để hoàn tất</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="discard">Xóa bỏ</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    </div>
-                </div>
-            </div>
+<form name="fm-multiple" method="POST">
+    <div class="d-flex">
+        <div class="form-check align-self-center ms-2">
+            <input class="form-check-input" type="checkbox" id="all-check">
+            <label class="form-check-label" for="all-check">
+                Chọn tất cả
+            </label>
         </div>
 
-        {{!-- <form method="POST" action="/courses/{{course._id}}?_method=DELETE"></form> --}}
-        <form method="POST" name="formCourse"></form>
+        <select class="select option-method ms-2" name="option-method" aria-label="option-method">
+            <option selected value="">Tùy chọn</option>
+            <option value="delete DELETE">Xóa</option>
+        </select>
 
-        <script>
-            const deleteCourseModal = document.getElementById('deleteCourseModal')
+        <button type="submit" class="btn btn-primary perform-delete ms-2" disabled>Thực hiện</button>
+    </div>
 
-            deleteCourseModal.addEventListener('show.bs.modal', function (event) {
-                const button = event.relatedTarget;
-                const courseId = button.getAttribute('data-bs-whatever');
-                const formCourse = document.forms['formCourse'];
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Trình độ</th>
+                <th scope="col" colspan="2">Thời gian tạo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each course}}
+            <tr>
+                <th scope="row">
+                    <div class="form-check">
+                        <input class="form-check-input course-check" type="checkbox" name="courses" value="{{this._id}}"
+                            id="course-{{sum @index 1}}">
+                        <label class="form-check-label" for="course-{{sum @index 1}}">
+                            {{sum @index 1}}
+                        </label>
+                    </div>
+                </th>
+                <td>{{this.name}}</td>
+                <td>{{this.level}}</td>
+                <td>{{this.createdAt}}</td>
+                <td>
+                    <a href="/courses/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+                    <a href="#" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteCourseModal"
+                        data-bs-whatever="{{this._id}}">Xóa</a>
+                </td>
+            </tr>
+            {{else}}
+            <td colspan="4">
+                <div class="alert alert-danger" role="alert">
+                    Danh sách khóa học trống!!!
+                    <a href="/courses/create" class="btn btn-link">Tạo khóa học ngay</a>
+                </div>
+            </td>
+            {{/each}}
+        </tbody>
+    </table>
+</form>
 
-                formCourse.action = `/courses/${courseId}?_method=DELETE`;
+<!-- Modal -->
+<div class="modal" tabindex="-1" id="deleteCourseModal" aria-labelledby="deleteCourseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteCourseModalLabel">Bạn có chắc chắn muốn xóa?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Chọn xóa bỏ để hoàn tất</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="discard">Xóa bỏ</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-                const discard = document.getElementById('discard');
-                discard.addEventListener('click', () => {
-                    formCourse.submit();
-                });
-            });
+{{!-- <form method="POST" action="/courses/{{course._id}}?_method=DELETE"></form> --}}
+<form method="POST" name="formCourse"></form>
 
-            const cbCourseAll = document.querySelector('#all-check');
-            const cbCourses = document.querySelectorAll('input.course-check');
-            const btPerformDelete = document.querySelector('button.perform-delete');
-            const slOptionMethod = document.querySelector('select.option-method');
+<script>
+    const deleteCourseModal = document.getElementById('deleteCourseModal')
 
-            cbCourseAll.addEventListener('click', (e) => {
-                for (let i = 0, l = cbCourses.length; i < l; i++) {
-                    cbCourses[i].checked = cbCourseAll.checked;
-                }
+    deleteCourseModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const courseId = button.getAttribute('data-bs-whatever');
+        const formCourse = document.forms['formCourse'];
 
-                btPerformDelete.disabled = slOptionMethod.value ? !cbCourseAll.checked : true;
-            });
+        formCourse.action = `/courses/${courseId}?_method=DELETE`;
 
-            //gắn sự kiện click vào từng check box
+        const discard = document.getElementById('discard');
+        discard.addEventListener('click', () => {
+            formCourse.submit();
+        });
+    });
+
+    const cbCourseAll = document.querySelector('#all-check');
+    const cbCourses = document.querySelectorAll('input.course-check');
+    const btPerformDelete = document.querySelector('button.perform-delete');
+    const slOptionMethod = document.querySelector('select.option-method');
+
+    cbCourseAll.addEventListener('click', (e) => {
+        for (let i = 0, l = cbCourses.length; i < l; i++) {
+            cbCourses[i].checked = cbCourseAll.checked;
+        }
+
+        btPerformDelete.disabled = slOptionMethod.value ? !cbCourseAll.checked : true;
+    });
+
+    //gắn sự kiện click vào từng check box
+    for (let i = 0, l = cbCourses.length; i < l; i++) {
+        cbCourses[i].addEventListener('click', (e) => {
+            let flag = true;
             for (let i = 0, l = cbCourses.length; i < l; i++) {
-                cbCourses[i].addEventListener('click', (e) => {
-                    let flag = true;
-                    for (let i = 0, l = cbCourses.length; i < l; i++) {
-                        if (!cbCourses[i].checked) {
-                            flag = false;
-                            break;
-                        }
-                    }
-                    cbCourseAll.checked = flag;
-
-                    flag = true;
-                    for (let i = 0, l = cbCourses.length; i < l; i++) {
-                        if (cbCourses[i].checked) {
-                            flag = false;
-                            break;
-                        }
-                    }
-                    btPerformDelete.disabled = slOptionMethod.value ? flag : true;
-                });
-            }
-
-            const fmMultiple = document.forms['fm-multiple'];
-
-            slOptionMethod.addEventListener('change', (e) => {
-                if (e.target.value)
-                    fmMultiple.action = `/courses/${e.target.value}-multiple?_method=${e.target.value}`;
-
-                let flag = true;
-                for (let i = 0, l = cbCourses.length; i < l; i++) {
-                    if (cbCourses[i].checked) {
-                        flag = false;
-                        break;
-                    }
+                if (!cbCourses[i].checked) {
+                    flag = false;
+                    break;
                 }
-                btPerformDelete.disabled = e.target.value ? flag : true;
-            })
-        </script>
+            }
+            cbCourseAll.checked = flag;
+
+            flag = true;
+            for (let i = 0, l = cbCourses.length; i < l; i++) {
+                if (cbCourses[i].checked) {
+                    flag = false;
+                    break;
+                }
+            }
+            btPerformDelete.disabled = slOptionMethod.value ? flag : true;
+        });
+    }
+
+    const fmMultiple = document.forms['fm-multiple'];
+
+    slOptionMethod.addEventListener('change', (e) => {
+        if (e.target.value) {
+            let path = e.target.value.split(' ');
+            fmMultiple.action = `/courses/${path[0]}-multiple?_method=${path[1]}`;
+        }
+
+        let flag = true;
+        for (let i = 0, l = cbCourses.length; i < l; i++) {
+            if (cbCourses[i].checked) {
+                flag = false;
+                break;
+            }
+        }
+        btPerformDelete.disabled = e.target.value ? flag : true;
+    });
+
+</script>

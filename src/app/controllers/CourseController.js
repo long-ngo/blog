@@ -38,6 +38,13 @@ class CourseController {
             .catch(next);
     }
 
+    //[PATCH] /courses/restore-multiple
+    restoreMultiple(req, res, next) {
+        Course.restore({ _id: req.body.courseId })
+            .then((data) => res.redirect('back'))
+            .catch(next);
+    }
+
     //[PATCH] /courses/:id
     restore(req, res, next) {
         Course.restore({ _id: req.params.id })
@@ -52,8 +59,15 @@ class CourseController {
             .catch(next);
     }
 
-    //[DELETE] /courses/:id/permanently-delete
-    permanentlyDelete(req, res, next) {
+    //[DELETE] /delete-permanently-multiple
+    deletePermanentlyMultiple(req, res, next) {
+        Course.deleteMany({ _id: req.body.courseId })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
+    //[DELETE] /courses/:id/delete-permanently
+    deletePermanently(req, res, next) {
         Course.deleteOne({ _id: req.params.id })
             .then(() => res.redirect('back'))
             .catch(next);
@@ -68,7 +82,7 @@ class CourseController {
 
     //[DELETE] /courses/delete-multiple
     deleteMultiple(req, res, next) {
-        Course.deleteById(req.body.courses)
+        Course.delete({ _id: req.body.courses })
             .then(() => res.redirect('back'))
             .catch(next);
     }
