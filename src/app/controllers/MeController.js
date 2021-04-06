@@ -4,7 +4,14 @@ const { multileMongooseToObject } = require('../../util/mongoose');
 class CourseController {
     //[GET] /me/stored/courses
     storedCourses(req, res, next) {
-        Promise.all([Course.find({}), Course.countDeleted({})])
+        let courses = Course.find({});
+        if (req.query.hasOwnProperty('_sort')) {
+            courses.sort({ 
+                [req.query.collumn]: req.query.type, 
+            });
+        }
+            
+        Promise.all([courses, Course.countDeleted({})])
             .then(([course, count]) => {
                 res.render('me/stored-courses', {
                     course: multileMongooseToObject(course),
@@ -22,6 +29,11 @@ class CourseController {
                 count
             }))
             .catch(next);
+    }
+
+    //[GET] /me/animation
+    animation(req, res, next) {
+        res.render('me/animation');
     }
 }
 

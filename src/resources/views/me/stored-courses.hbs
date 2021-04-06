@@ -26,9 +26,18 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Tên</th>
-                <th scope="col">Trình độ</th>
-                <th scope="col" colspan="2">Thời gian tạo</th>
+                <th scope="col">
+                    Tên
+                    {{{sortTable 'name' _sort}}}
+                </th>
+                <th scope="col">
+                    Trình độ
+                    {{{sortTable 'level' _sort}}}
+                </th>
+                <th scope="col" colspan="2">
+                    Thời gian tạo
+                    {{{sortTable 'createdAt' _sort}}}
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -106,18 +115,35 @@
     const cbCourses = document.querySelectorAll('input.course-check');
     const btPerformDelete = document.querySelector('button.perform-delete');
     const slOptionMethod = document.querySelector('select.option-method');
+    const fmMultiple = document.forms['fm-multiple'];
 
-    cbCourseAll.addEventListener('click', (e) => {
+    function onOrOffBtPerformDelete() {
+        let flag = false;
+        for (let i = 0, l = cbCourses.length; i < l; i++) {
+            if (cbCourses[i].checked) {
+                flag = true;
+                break;
+            }
+        }
+
+        //flag == true && slOptionMethod.target.value !== ''
+        if (flag && slOptionMethod.value)
+            btPerformDelete.disabled = false;
+        else {
+            btPerformDelete.disabled = true;
+        }
+    }
+
+    cbCourseAll.addEventListener('change', (e) => {
         for (let i = 0, l = cbCourses.length; i < l; i++) {
             cbCourses[i].checked = cbCourseAll.checked;
         }
-
-        btPerformDelete.disabled = slOptionMethod.value ? !cbCourseAll.checked : true;
+        onOrOffBtPerformDelete();
     });
 
-    //gắn sự kiện click vào từng check box
+    //gắn sự kiện change vào từng check box
     for (let i = 0, l = cbCourses.length; i < l; i++) {
-        cbCourses[i].addEventListener('click', (e) => {
+        cbCourses[i].addEventListener('change', (e) => {
             let flag = true;
             for (let i = 0, l = cbCourses.length; i < l; i++) {
                 if (!cbCourses[i].checked) {
@@ -126,34 +152,16 @@
                 }
             }
             cbCourseAll.checked = flag;
-
-            flag = true;
-            for (let i = 0, l = cbCourses.length; i < l; i++) {
-                if (cbCourses[i].checked) {
-                    flag = false;
-                    break;
-                }
-            }
-            btPerformDelete.disabled = slOptionMethod.value ? flag : true;
+            onOrOffBtPerformDelete();
         });
     }
-
-    const fmMultiple = document.forms['fm-multiple'];
 
     slOptionMethod.addEventListener('change', (e) => {
         if (e.target.value) {
             let path = e.target.value.split(' ');
             fmMultiple.action = `/courses/${path[0]}-multiple?_method=${path[1]}`;
         }
-
-        let flag = true;
-        for (let i = 0, l = cbCourses.length; i < l; i++) {
-            if (cbCourses[i].checked) {
-                flag = false;
-                break;
-            }
-        }
-        btPerformDelete.disabled = e.target.value ? flag : true;
+        onOrOffBtPerformDelete();
     });
 
 </script>

@@ -90,20 +90,20 @@
 
 <script>
     //Tạo form <form method="POST" name="formCourse"></form>
-    var formCourse = document.createElement('form');
+    const formCourse = document.createElement('form');
     formCourse.method = 'POST';
     formCourse.name = 'form-course';
     document.body.appendChild(formCourse);
 
     //Bắt event khôi phục và xóa
-    var restoreCourse = document.querySelectorAll('.restore-course');
-    var courseModal = document.querySelector('#course-modal');
+    const restoreCourse = document.querySelectorAll('.restore-course');
+    const courseModal = document.querySelector('#course-modal');
 
     for (let i = 0, l = restoreCourse.length; i < l; i++) {
         restoreCourse[i].addEventListener('click', function (event) {
             //event.target trả về this tag </>
-            var courseId = event.target.getAttribute('data-bs-whatever');
-            var formCourse = document.forms['form-course'];
+            const courseId = event.target.getAttribute('data-bs-whatever');
+            const formCourse = document.forms['form-course'];
 
             formCourse.action = `/courses/${courseId}?_method=PATCH`;
             formCourse.submit();
@@ -111,13 +111,13 @@
     }
 
     courseModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget;
-        var courseId = button.getAttribute('data-bs-whatever');
-        var formCourse = document.forms['form-course'];
+        const button = event.relatedTarget;
+        const courseId = button.getAttribute('data-bs-whatever');
+        const formCourse = document.forms['form-course'];
 
         formCourse.action = `/courses/${courseId}/delete-permanently?_method=DELETE`;
 
-        var discard = document.getElementById('discard');
+        const discard = document.getElementById('discard');
         discard.addEventListener('click', () => {
             formCourse.submit();
         });
@@ -125,38 +125,46 @@
 
     //chức năng khôi phục và xóa nhiều khóa học
     const cbCourseAll = document.querySelector('#all-check');
-    const cbCourseId = document.querySelectorAll('input.course-check');
+    const cbItemCourse = document.querySelectorAll('input.course-check');
     const btPerformDelete = document.querySelector('button.perform-delete');
     const slOptionMethod = document.querySelector('select.option-method');
 
-    cbCourseAll.addEventListener('click', (e) => {
-        for (let i = 0, l = cbCourseId.length; i < l; i++) {
-            cbCourseId[i].checked = cbCourseAll.checked;
+    function onOrOffBtPerformDelete() {
+        let flag = false;
+        for (let i = 0, l = cbItemCourse.length; i < l; i++) {
+            if (cbItemCourse[i].checked) {
+                flag = true;
+                break;
+            }
         }
 
-        btPerformDelete.disabled = slOptionMethod.value ? !cbCourseAll.checked : true;
+        //flag == true && slOptionMethod.target.value !== ''
+        if (flag && slOptionMethod.value)
+            btPerformDelete.disabled = false;
+        else {
+            btPerformDelete.disabled = true;
+        }
+    }
+
+    cbCourseAll.addEventListener('click', (e) => {
+        for (let i = 0, l = cbItemCourse.length; i < l; i++) {
+            cbItemCourse[i].checked = cbCourseAll.checked;
+        }
+        onOrOffBtPerformDelete();
     });
 
     //gắn sự kiện click vào từng check box
-    for (let i = 0, l = cbCourseId.length; i < l; i++) {
-        cbCourseId[i].addEventListener('click', (e) => {
+    for (let i = 0, l = cbItemCourse.length; i < l; i++) {
+        cbItemCourse[i].addEventListener('click', (e) => {
             let flag = true;
-            for (let i = 0, l = cbCourseId.length; i < l; i++) {
-                if (!cbCourseId[i].checked) {
+            for (let i = 0, l = cbItemCourse.length; i < l; i++) {
+                if (!cbItemCourse[i].checked) {
                     flag = false;
                     break;
                 }
             }
             cbCourseAll.checked = flag;
-
-            flag = true;
-            for (let i = 0, l = cbCourseId.length; i < l; i++) {
-                if (cbCourseId[i].checked) {
-                    flag = false;
-                    break;
-                }
-            }
-            btPerformDelete.disabled = slOptionMethod.value ? flag : true;
+            onOrOffBtPerformDelete();
         });
     }
 
@@ -167,15 +175,7 @@
             let path = e.target.value.trim().split(' ');
             fmMultiple.action = `/courses/${path[0]}-multiple?_method=${path[1]}`;
         }
-
-        let flag = true;
-        for (let i = 0, l = cbCourseId.length; i < l; i++) {
-            if (cbCourseId[i].checked) {
-                flag = false;
-                break;
-            }
-        }
-        btPerformDelete.disabled = e.target.value ? flag : true;
-    })
+        onOrOffBtPerformDelete();
+    });
 
 </script>

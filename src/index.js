@@ -9,6 +9,8 @@ const port = 3000;
 
 const route = require('./routes/main');
 const db = require('./config/db');
+const sortTable = require('./middleware/sortTable');
+const { SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG } = require('constants');
 
 //connect to DB
 db.connect();
@@ -33,7 +35,26 @@ app.engine(
     exphbs({
         extname: '.hbs',
         helpers: {
-            sum: (a, b) => a + b
+            sum: (a, b) => a + b,
+            sortTable: (col, sort) => {
+                const types = {
+                    default: 'desc',
+                    desc: 'asc',
+                    asc: 'desc'
+                }
+
+                const icons = {
+                    default: 'fa-sort',
+                    asc: 'fa-sort-amount-up',
+                    desc: 'fa-sort-amount-down'
+                }
+
+                let type = (col === sort.collumn) ? sort.type : 'default';
+
+                return `<a href="?_sort&collumn=${col}&type=${types[type]}">
+                    <i class="fas ${icons[type]}"></i>
+                    </a>`;
+            }
         }
     })
 );
@@ -42,6 +63,9 @@ app.set('views', path.join(__dirname, 'resources', 'views'));
 
 // override with POST having ?_method=PUT
 app.use(methodOverride('_method'));
+
+//middleware
+app.use(sortTable);
 
 //routes init
 route(app);
