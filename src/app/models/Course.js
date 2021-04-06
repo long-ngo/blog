@@ -6,7 +6,7 @@ mongoose.plugin(slug);
 
 const Schema = mongoose.Schema;
 
-const Course = new Schema(
+const CourseSchema = new Schema(
     {
         name: { type: String, required: true },
         description: { type: String, required: true },
@@ -19,9 +19,20 @@ const Course = new Schema(
     }
 );
 
-Course.plugin(mongoose_delete, {
+CourseSchema.plugin(mongoose_delete, {
     overrideMethods: 'all',
     deletedAt: true
 });
 
-module.exports = mongoose.model('Course', Course);
+//Query Helpers
+CourseSchema.query.sortTable = function(req) {
+    if (req.query.hasOwnProperty('_sort')) {
+        return this.sort({ 
+            [req.query.collumn]: req.query.type
+        });
+    }
+    return this;
+}
+
+
+module.exports = mongoose.model('Course', CourseSchema);

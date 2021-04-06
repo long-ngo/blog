@@ -9,8 +9,7 @@ const port = 3000;
 
 const route = require('./routes/main');
 const db = require('./config/db');
-const sortTable = require('./middleware/sortTable');
-const { SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG } = require('constants');
+const sortTable = require('./app/middleware/sortMiddlleware');
 
 //connect to DB
 db.connect();
