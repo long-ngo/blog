@@ -9,6 +9,6 @@ module.exports = function (req, res, next) {
             type: req.query.type
         })
     }
-
+    
     next();
 }
