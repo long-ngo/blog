@@ -1,5 +1,5 @@
 const express = require('express');
-const morgan = require('morgan');
+//const morgan = require('morgan');
 const methodOverride = require('method-override');
 const exphbs = require('express-handlebars');
 const path = require('path');
@@ -26,7 +26,7 @@ app.use(
 app.use(express.json());
 
 //http logger
-app.use(morgan('combined'));
+//app.use(morgan('combined'));
 
 //template engine
 app.engine(
